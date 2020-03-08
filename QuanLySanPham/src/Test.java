@@ -9,6 +9,9 @@ public class Test {
         while (number != 0) {
             menu();
             number = scanner.nextInt();
+            File file = new File("D:\\Module 2\\Day 17\\QuanLySanPham\\ProductList");
+            OutputStream outputStream = new FileOutputStream(file);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
             switch (number) {
                 case 1:
                     ArrayList<SanPham> list = new ArrayList<>();
@@ -31,13 +34,11 @@ public class Test {
                     sanPham.setPrice(price);
 
                     list.add(sanPham);
-                    File file = new File("D:\\Module 2\\Day 17\\QuanLySanPham\\ProductList");
-                    OutputStream outputStream = new FileOutputStream(file);
-                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+
                     for (SanPham sanPham1: list) {
                         objectOutputStream.writeObject(sanPham1);
-                        objectOutputStream.close();
                     }
+                    objectOutputStream.flush();
                     break;
                 case 2:
                     ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream
@@ -51,6 +52,7 @@ public class Test {
                     break;
                 case 4:
                     System.exit(4);
+                    objectOutputStream.close();
             }
         }
     }
